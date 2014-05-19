@@ -1,0 +1,17 @@
+
+<VirtualHost *:80>
+
+  ServerName <%= node[:glpi][:server_name] %>
+<% unless node[:glpi][:server_alias].nil? %>
+  ServerAlias <%= node[:glpi][:server_alias] %>
+<% end %>
+  DocumentRoot <%= node[:glpi][:path] %>
+
+  <Directory <%= node[:glpi][:path] %>>
+    Options -MultiViews -Indexes +FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+</VirtualHost>

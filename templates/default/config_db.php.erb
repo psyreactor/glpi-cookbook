@@ -1,0 +1,13 @@
+<?php
+ class DB extends DBmysql {
+
+ var $dbhost = 'localhost';
+
+ var $dbuser    = '<%= node[:glpi][:db_user] %>';
+
+ var $dbpassword= '<%= node[:glpi][:db_password] %>';
+
+ var $dbdefault = '<%= node[:glpi][:db_name] %>';
+
+ }
+?>

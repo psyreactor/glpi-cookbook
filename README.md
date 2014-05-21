@@ -13,6 +13,17 @@ The principal functionalities of the application are :
 1. the precise inventory of all the technical resources. All their characteristics will be stored in a database.
 1. management and the history of the maintenance actions and the bound procedures. This application is dynamic and is directly connected to the users who can post requests to the technicians. An interface thus authorizes the latter with if required preventing the service of maintenance and indexing a problem encountered with one of the technical resources to which they have access.
 
+### [Skin GLPI](https://sites.google.com/site/airtecmx/glpi---skins)
+Two variants of graphic templates to change the appearance of the ticketing system.
+#### Grey
+![Grey](https://sites.google.com/site/airtecmx/glpi---skins/greyskinforglpi084-includesimagesscriptsandcssfiles-/01.png?attredirects=0)
+
+#### Black
+![Black](https://sites.google.com/site/airtecmx/glpi---skins/blackgreenskinforglpi084/black2.png.1379563631780.png?attredirects=0)
+
+#### Default
+![Default](http://s20.postimage.org/66nbf46gd/GLPI.jpg)
+
 Requirements
 ------------
 #### Cookbooks:
@@ -38,7 +49,7 @@ The following platform families are supported in the code, and are assumed to wo
 Recipes
 -------
 #### glpi:default
-##### BasicConfig Auth
+##### Basic Config
 <table>
   <tr>
     <th>Key</th>
@@ -100,7 +111,18 @@ Recipes
     <td>Default password for glpi,tech,post-only and normal</td>
     <td><tt>default</tt></td>
   </tr>
+  <tr>
+    <td><tt>node[:glpi][:theme]</tt></td>
+    <td>String</td>
+    <td>Default, black or grey are acepted values</td>
+    <td><tt>default</tt></td>
+  </tr>
 </table>
+
+#### glpi:theme
+not config required
+
+
 Usage
 -----
 #### glpi::default

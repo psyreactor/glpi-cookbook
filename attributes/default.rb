@@ -7,3 +7,4 @@ default[:glpi][:db_password] = 'password'
 default[:glpi][:server_name] = 'tickets'
 default[:glpi][:server_alias] = nil
 default[:glpi][:glpi_pass] = 'default'
+default[:glpi][:selected] = 'default' # default , grey or black

@@ -1,0 +1,29 @@
+require_relative '../spec_helper'
+
+describe 'glpi::theme on Centos 6.5' do
+  let(:chef_run) do
+    ChefSpec::Runner.new(
+      :platform => 'centos',
+      :version => '6.5'
+      ) do |node|
+      node.set[:glpi][:selected] = 'grey'
+    end.converge('glpi::theme')
+  end
+
+  it 'installs a package for unzip theme' do
+    expect(chef_run).to install_package('unzip')
+  end
+
+  it 'download a gray skin glpi' do
+    expect(chef_run).to create_remote_file_if_missing("#{Chef::Config[:file_cache_path]}/grey.skin.zip")
+  end
+
+  it 'backup theme default for icinga' do
+    expect(chef_run).to run_script('theme_backup')
+  end
+
+  it 'install theme for icinga' do
+    expect(chef_run).to run_script('theme_build')
+  end
+
+end

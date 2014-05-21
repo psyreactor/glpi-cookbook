@@ -109,3 +109,5 @@ end
 apache_site 'glpi.conf' do
   enable site_enabled
 end
+
+include_recipe 'glpi::theme'

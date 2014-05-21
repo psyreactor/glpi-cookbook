@@ -56,6 +56,7 @@ describe 'glpi::default on Centos 6.5' do
       group: 'apache'
     )
   end
+
   it 'checkouts a subversion glpi repository' do
     expect(chef_run).to checkout_subversion('/usr/share/glpi').with(repository: 'https://forge.indepnet.net/svn/glpi/tags/GLPI_0.84.5')
   end
@@ -90,6 +91,10 @@ describe 'glpi::default on Centos 6.5' do
 
   it 'delete install file' do
     expect(chef_run).to delete_file('/usr/share/glpi/install/install.php')
+  end
+
+  it 'includes glpi theme recipe' do
+    expect(chef_run).to include_recipe('glpi::theme')
   end
 
 end

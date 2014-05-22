@@ -8,3 +8,13 @@ default[:glpi][:server_name] = 'tickets'
 default[:glpi][:server_alias] = nil
 default[:glpi][:glpi_pass] = 'default'
 default[:glpi][:selected] = 'default' # default , grey or black
+
+# AD auth config
+
+default[:glpi][:ad][:enable] = true
+default[:glpi][:ad][:domain] = 'CONTOSO'
+default[:glpi][:ad][:pdc] = 'ldap://192.168.0.1'
+default[:glpi][:ad][:basedn] = 'dc=contoso, dc=com'
+default[:glpi][:ad][:binduser] = 'user@contoso.com.ar'
+default[:glpi][:ad][:bindpassword] = 'password'
+default[:glpi][:ad][:port] = '389'

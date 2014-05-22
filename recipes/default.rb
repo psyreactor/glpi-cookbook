@@ -83,6 +83,19 @@ mysql_database 'glpi_password' do
   only_if "mysql --user=#{node[:glpi][:db_user]} --password=#{node[:glpi][:db_password]} #{node[:glpi][:db_name]} -e \"SELECT password FROM glpi_users\" | grep 0915bd0a5c6e56d8f38ca2b390857d4949073f41 -ci "
 end
 
+mysql_database 'glpi_AD' do
+  connection mysql_connection_info
+  database_name node[:glpi][:db_name]
+  if node[:glpi][:ad][:enable]
+    sql "INSERT INTO `glpi_authldaps` (name, host, basedn, rootdn, port, login_field, group_field, group_search_type, email1_field, realname_field, firstname_field, phone_field, phone2_field, mobile_field, comment_field, use_dn, deref_option, title_field, entity_field, entity_condition, date_mod, is_default, is_active, rootdn_passwd, registration_number_field) VALUES ('#{node[:glpi][:ad][:domain]}','#{node[:glpi][:ad][:pdc]}','#{node[:glpi][:ad][:basedn]}','#{node[:glpi][:ad][:binduser]}',#{node[:glpi][:ad][:port]},'samaccountname','memberof',2,'mail','sn','givenname','telephonenumber','othertelephone','mobile','info',1,0,'title','ou','(objectclass=organizationalUnit)',now(),1,1,MD5('#{node[:glpi][:ad][:bindpassword]}'),'employeenumber');"
+    not_if "mysql --user=#{node[:glpi][:db_user]} --password=#{node[:glpi][:db_password]} #{node[:glpi][:db_name]} -e \"SELECT * FROM glpi_authldaps\" | grep #{node[:glpi][:ad][:domain]}"
+  else
+    sql "DELETE FROM `glpi_authldaps` WHERE name = '#{node[:glpi][:ad][:domain]}';"
+    only_if "mysql --user=#{node[:glpi][:db_user]} --password=#{node[:glpi][:db_password]} #{node[:glpi][:db_name]} -e \"SELECT * FROM glpi_authldaps\" | grep #{node[:glpi][:ad][:domain]}"
+  end
+  action :query
+end
+
 template "#{node[:apache][:dir]}/sites-available/glpi.conf" do
   source 'glpi.conf.erb'
   owner 'root'

@@ -2,7 +2,7 @@
 require 'base64'
 
 module Glpi
-# helper Glpi
+  # helper Glpi
   module Helpers
     def glpi_encrypt(password)
       result = ''

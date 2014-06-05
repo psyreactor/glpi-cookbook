@@ -77,7 +77,7 @@ when 'default'
     only_if { ::Dir.exist?("#{node[:glpi][:path]}/bk") }
   end
 
-  directory "#{node[:glpi][:path]}/bk/" do
+  directory "#{node[:glpi][:path]}/bk" do
     owner 'root'
     group 'root'
     mode '0755'

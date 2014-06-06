@@ -15,4 +15,15 @@ suites:
   - name: default
     run_list:
       - recipe[glpi::default]
-    attributes:
+    attributes: {
+      'glpi': {
+        'mailcollector': {
+          'test@contoso.com': {
+            'host': '{mail.contoso.com:110/pop/ssl}INBOX',
+            'login': 'test@contoso.com',
+            'filesize_max': 10,
+            'password': 'test'
+          }
+        }
+      }
+    }

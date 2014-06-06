@@ -11,7 +11,11 @@ describe 'glpi::default on Centos 6.5' do
       node.set[:glpi][:path] = '/usr/share/glpi'
       node.set[:glpi][:db_name] = 'glpi'
       node.set[:glpi][:db_user] = 'glpi'
-      node.set[:glpi][:ad][:enabled] = true
+      node.set[:glpi][:ad][:enable] = true
+      node.set[:glpi][:mailcollector][:test][:host] = '{mail.contoso.com:110/pop/ssl}INBOX'
+      node.set[:glpi][:mailcollector][:test][:login] = 'test@contoso.com'
+      node.set[:glpi][:mailcollector][:test][:password] = 'password'
+      node.set[:glpi][:mailcollector][:test][:filesize_max] = '10'
     end.converge('glpi::default')
   end
 
@@ -22,6 +26,7 @@ describe 'glpi::default on Centos 6.5' do
     stub_command('mysql --user=glpi --password=password glpi -e "SELECT version FROM glpi_configs" | grep 0.84.5 -ci ').and_return(false)
     stub_command('mysql --user=glpi --password=password glpi -e "SELECT password FROM glpi_users" | grep 0915bd0a5c6e56d8f38ca2b390857d4949073f41 -ci ').and_return(true)
     stub_command('mysql --user=glpi --password=password glpi -e "SELECT * FROM glpi_authldaps" | grep CONTOSO').and_return(false)
+    stub_command('mysql --user=glpi --password=password glpi -e "SELECT * FROM glpi_mailcollectors" | grep test').and_return(false)
   end
 
   it 'includes apache2 recipes' do
@@ -101,6 +106,10 @@ describe 'glpi::default on Centos 6.5' do
 
   it 'enable AD auth on glpi' do
     expect(chef_run).to query_mysql_database('glpi_AD')
+  end
+
+  it 'enable mailcollector on glpi' do
+    expect(chef_run).to query_mysql_database('glpi_mail_test')
   end
 
 end

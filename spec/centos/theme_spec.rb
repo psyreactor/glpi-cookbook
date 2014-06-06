@@ -39,7 +39,7 @@ describe 'glpi::theme default on Centos 6.5' do
   end
 
   before do
-    ::Dir.stub(:exist?).with('/usr/share/glpi/bk').and_return true
+    ::Dir.stub(:exist?).with('/usr/share/glpi/bk').and_return(true)
   end
 
   it 'restore default theme for glpi' do

@@ -116,12 +116,129 @@ Recipes
     <td>String</td>
     <td>Default, black or grey are acepted values</td>
     <td><tt>default</tt></td>
+  <tr>
+    <td><tt>node[:glpi][:mailcollector]</tt></td>
+    <td>array</td>
+    <td>Configure n mail collectors</td>
+    <td><tt>n/a</tt></td>
+  </tr>
+</table>
+
+#####Config Auth Active Directory
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:enable]</tt></td>
+    <td>boolean</td>
+    <td>Enable/Disable Active Directory Auth</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:domain]</tt></td>
+    <td>String</td>
+    <td>Domain name</td>
+    <td><tt>CONTOSO</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:PDC]</tt></td>
+    <td>String</td>
+    <td>PDC IP or DNS, ldap:// or ldaps:// (Optional)</td>
+    <td><tt>ldap://192.168.0.1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:basedn]</tt></td>
+    <td>String</td>
+    <td>DN Base for search users</td>
+    <td><tt>dc=contoso,dc=com</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:binddn]</tt></td>
+    <td>String</td>
+    <td>user for bind DN</td>
+    <td><tt>user@contoso.com</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:bindpassword]</tt></td>
+    <td>String</td>
+    <td>password of user for bind DN</td>
+    <td><tt>password</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:ad][:port]</tt></td>
+    <td>string</td>
+    <td>Port of Active directory</td>
+    <td><tt>389</tt></td>
   </tr>
 </table>
 
 #### glpi:theme
 not config required
 
+##### Examples of mail collector array
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:mailcollector][#{name}][host]</tt></td>
+    <td>string</td>
+    <td>conection string for mail server</td>
+    <td><tt>{mail.contoso.com:110/pop/ssl}</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:mailcollector][#{name}][login]</tt></td>
+    <td>String</td>
+    <td>user email</td>
+    <td><tt>user@contoso.com</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:mailcollector][#{name}][:filesize_max]</tt></td>
+    <td>Int</td>
+    <td>Max filesize in MB</td>
+    <td><tt>10</tt></td>
+  </tr>
+  <tr>
+    <td><tt>default[:glpi][:mailcollector][#{name}][:password]</tt></td>
+    <td>String</td>
+    <td>Password of mail user</td>
+    <td><tt>secret</tt></td>
+  </tr>
+</table>
+
+```json
+"default_attributes": {
+  "glpi": {
+    "mailcollector": {
+      "test@contoso.com": {
+        "host": "{mail.contoso.com:110/pop/ssl}INBOX",
+        "login': "test@contoso.com",
+        "filesize_max": 10,
+        "password': "test"
+      }
+    }
+  }
+}
+```
+Example of hots string conection for mailcollector:
+
+######Basic
+```
+{mail.contoso.com/pop} #pop config
+{mail.contoso.com/imap} #imap config
+```
+######Advance
+```
+{mail.contoso.com:110/pop/ssl/novalidate-cert/tsl/debug}
+#pop, ssl, no check certificate config, tsl enable, debug enable
+```
 
 Usage
 -----

@@ -39,7 +39,7 @@ The following platforms and versions are tested and supported using Opscode's te
 
 - CentOS 5.8, 6.3
 
-The following platform families are supported in the code, and are assumed to work based on the successful testing on Ubuntu and CentOS.
+The following platform families are supported in the code, and are assumed to work based on the successful testing on CentOS.
 
 
 - Red Hat (rhel)
